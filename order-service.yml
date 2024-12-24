@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/order-service
+    username: root
+    password: 0000
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+server:
+  port: 0
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventory:
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 10
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
